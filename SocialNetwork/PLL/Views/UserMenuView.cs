@@ -47,7 +47,11 @@ namespace SocialNetwork.PLL.Views
                             Program.userDataUpdateView.Show(user);
                             break;
                         }
-
+                    //case "3":
+                    //    {
+                    //        Program.userOutcomingMessageView.Show(user.OutgoingMessages);
+                    //        break;
+                    //    }
                     case "4":
                         {
                             Program.messageSendingView.Show(user);
@@ -65,10 +69,9 @@ namespace SocialNetwork.PLL.Views
                         {
                             Program.userOutcomingMessageView.Show(user.OutgoingMessages);
                             break;
-                        }
+                        }                    
                 }
             }
-
         }
     }
 }
