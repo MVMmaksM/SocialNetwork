@@ -13,9 +13,14 @@ namespace SocialNetwork.PLL.Views
 {
     public class UserAddFriendView
     {
+        FriendService friendService;
+        public UserAddFriendView(FriendService friendService)
+        {
+            this.friendService = friendService;
+        }
         public void Show()
         {
-            Console.WriteLine("Add friend");
+                       
         }
     }
 }
