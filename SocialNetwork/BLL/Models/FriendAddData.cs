@@ -8,6 +8,7 @@ namespace SocialNetwork.BLL.Models
 {
     public class FriendAddData
     {
+        public int SenderId { get; set; }
         public string FriendEmail { get; set; }
     }
 }

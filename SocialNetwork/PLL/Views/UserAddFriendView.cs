@@ -20,7 +20,12 @@ namespace SocialNetwork.PLL.Views
         }
         public void Show()
         {
-                       
+            var frinedAddData = new FriendAddData();
+            
+            Console.Write("Введите почтовый адрес друга: ");
+            frinedAddData.FriendEmail = Console.ReadLine();
+
+
         }
     }
 }
