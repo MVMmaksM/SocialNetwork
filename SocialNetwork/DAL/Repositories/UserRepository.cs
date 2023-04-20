@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SocialNetwork.DAL.Repositories
 {
-    internal class UserRepository: BaseRepository
+    internal class UserRepository : BaseRepository, IUserRepository
     {
         public int Create(UserEntity userEntity)
         {
@@ -40,5 +40,15 @@ namespace SocialNetwork.DAL.Repositories
         {
             return Execute("delete from users where id = :id_p", new { id_p = id });
         }
+    }
+
+    public interface IUserRepository
+    {
+        int Create(UserEntity userEntity);
+        UserEntity FindByEmail(string email);
+        IEnumerable<UserEntity> FindAll();
+        UserEntity FindById(int id);
+        int Update(UserEntity userEntity);
+        int DeleteById(int id);
     }
 }
