@@ -1,6 +1,7 @@
 ﻿using SocialNetwork.BBL.Models;
 using SocialNetwork.BLL.Exceptions;
 using SocialNetwork.BLL.Models;
+using SocialNetwork.BLL.Services;
 using SocialNetwork.DAL.Entities;
 using SocialNetwork.DAL.Repositories;
 using System;
@@ -14,10 +15,12 @@ namespace SocialNetwork.BBL.Services
 {
     public class UserService
     {
+        MessageService messageService;
         IUserRepository userRepository;
         public UserService()
         {
             userRepository = new UserRepository();
+            messageService = new MessageService();
         }
 
         public void Register(UserRegistrationData userRegistrationData)
@@ -55,13 +58,7 @@ namespace SocialNetwork.BBL.Services
                 throw new Exception();
 
         }
-        public User FindById(int id)
-        {
-            var findUserEntity = userRepository.FindById(id);
-            if (findUserEntity is null) throw new UserNotFoundException();
 
-            return ConstructUserModel(findUserEntity);
-        }
         public User Authenticate(UserAuthenticationData userAuthenticationData)
         {
             var findUserEntity = userRepository.FindByEmail(userAuthenticationData.Email);
@@ -76,6 +73,14 @@ namespace SocialNetwork.BBL.Services
         public User FindByEmail(string email)
         {
             var findUserEntity = userRepository.FindByEmail(email);
+            if (findUserEntity is null) throw new UserNotFoundException();
+
+            return ConstructUserModel(findUserEntity);
+        }
+
+        public User FindById(int id)
+        {
+            var findUserEntity = userRepository.FindById(id);
             if (findUserEntity is null) throw new UserNotFoundException();
 
             return ConstructUserModel(findUserEntity);
@@ -101,6 +106,10 @@ namespace SocialNetwork.BBL.Services
 
         private User ConstructUserModel(UserEntity userEntity)
         {
+            var incomingMessages = messageService.GetIncomingMessagesByUserId(userEntity.id);
+
+            var outgoingMessages = messageService.GetOutcomingMessagesByUserId(userEntity.id);
+
             return new User(userEntity.id,
                           userEntity.firstname,
                           userEntity.lastname,
@@ -108,7 +117,12 @@ namespace SocialNetwork.BBL.Services
                           userEntity.email,
                           userEntity.photo,
                           userEntity.favorite_movie,
-                          userEntity.favorite_book);
+                          userEntity.favorite_book,
+                          incomingMessages,
+                          outgoingMessages
+                          );
         }
     }
 }
+
+
