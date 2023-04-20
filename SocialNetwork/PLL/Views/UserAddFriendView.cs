@@ -18,14 +18,22 @@ namespace SocialNetwork.PLL.Views
         {
             this.friendService = friendService;
         }
-        public void Show()
+        public void Show(User user)
         {
-            var frinedAddData = new FriendAddData();
+            var friendAddData = new FriendAddData();
             
             Console.Write("Введите почтовый адрес друга: ");
-            frinedAddData.FriendEmail = Console.ReadLine();
+            friendAddData.FriendEmail = Console.ReadLine();
 
+            friendAddData.SenderId = user.Id;
+            
+            try
+            {
+                friendService.AddFriend(friendAddData);
 
+                SuccessMessage.Show("Пользователь успешно добавлен в друзья!");                
+            }
+            catch (Exception ex) { }
         }
     }
 }

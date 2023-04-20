@@ -10,6 +10,7 @@ namespace SocialNetwork
 {
     class Program
     {
+        static FriendService friendService;
         static MessageService messageService;
         static UserService userService;
         public static MainView mainView;
@@ -28,6 +29,7 @@ namespace SocialNetwork
         {
             userService = new UserService();
             messageService = new MessageService();
+            friendService = new FriendService();
 
             mainView = new MainView();
             registrationView = new RegistrationView(userService);
@@ -38,7 +40,7 @@ namespace SocialNetwork
             messageSendingView = new MessageSendingView(messageService, userService);
             userIncomingMessageView = new UserIncomingMessageView();
             userOutcomingMessageView = new UserOutcomingMessageView();
-            userAddFriendView = new UserAddFriendView();
+            userAddFriendView = new UserAddFriendView(friendService);
 
             while (true)
             {
