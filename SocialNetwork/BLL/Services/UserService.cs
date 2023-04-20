@@ -55,7 +55,13 @@ namespace SocialNetwork.BBL.Services
                 throw new Exception();
 
         }
+        public User FindById(int id)
+        {
+            var findUserEntity = userRepository.FindById(id);
+            if (findUserEntity is null) throw new UserNotFoundException();
 
+            return ConstructUserModel(findUserEntity);
+        }
         public User Authenticate(UserAuthenticationData userAuthenticationData)
         {
             var findUserEntity = userRepository.FindByEmail(userAuthenticationData.Email);
